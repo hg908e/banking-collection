@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "DELETE",
+    "url": "/api/accounts/1001"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "close-account-response.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

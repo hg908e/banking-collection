@@ -1,0 +1,7 @@
+{
+  "accountId": 1001,
+  "customerName": "Rahul Sharma",
+  "accountType": "SAVINGS",
+  "balance": 5000,
+  "status": "ACTIVE"
+}

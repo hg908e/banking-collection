@@ -1,0 +1,151 @@
+{
+  "info": {
+    "name": "Banking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080/api"},
+    {"key": "accountId", "value": "1001"}
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [{
+        "name": "Health",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('API is UP', function () { var json = pm.response.json(); pm.expect(json).to.have.property('status', 'UP'); });"
+            ],
+            "type": "text/javascript"
+          }
+        }],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {"raw": "{{baseUrl}}/health", "host": ["{{baseUrl}}"], "path": ["health"]}
+        }
+      }]
+    },
+    {
+      "name": "Create Account",
+      "item": [{
+        "name": "Create Account",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+              "pm.test('Response has accountId', function () { var json = pm.response.json(); pm.expect(json).to.have.property('accountId', 1001); });",
+              "pm.test('Response has customerName', function () { var json = pm.response.json(); pm.expect(json).to.have.property('customerName', 'Rahul Sharma'); });",
+              "pm.test('Response has accountType SAVINGS', function () { var json = pm.response.json(); pm.expect(json).to.have.property('accountType', 'SAVINGS'); });",
+              "pm.test('Balance validation - initial balance 5000', function () { var json = pm.response.json(); pm.expect(json).to.have.property('balance', 5000); });",
+              "pm.test('Status is ACTIVE', function () { var json = pm.response.json(); pm.expect(json).to.have.property('status', 'ACTIVE'); });"
+            ],
+            "type": "text/javascript"
+          }
+        }],
+        "request": {
+          "method": "POST",
+          "header": [{"key": "Content-Type", "value": "application/json"}],
+          "body": {"mode": "raw", "raw": "{\n  \"customerName\": \"Rahul Sharma\",\n  \"accountType\": \"SAVINGS\",\n  \"initialDeposit\": 5000\n}"},
+          "url": {"raw": "{{baseUrl}}/accounts", "host": ["{{baseUrl}}"], "path": ["accounts"]}
+        }
+      }]
+    },
+    {
+      "name": "Get Account",
+      "item": [{
+        "name": "Get Account",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response has accountId 1001', function () { var json = pm.response.json(); pm.expect(json).to.have.property('accountId', 1001); });",
+              "pm.test('Response has correct balance', function () { var json = pm.response.json(); pm.expect(json.balance).to.be.within(0, 999999999); });",
+              "pm.test('Account status is ACTIVE', function () { var json = pm.response.json(); pm.expect(json).to.have.property('status', 'ACTIVE'); });"
+            ],
+            "type": "text/javascript"
+          }
+        }],
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {"raw": "{{baseUrl}}/accounts/{{accountId}}", "host": ["{{baseUrl}}"], "path": ["accounts", "{{accountId}}"]}
+        }
+      }]
+    },
+    {
+      "name": "Deposit",
+      "item": [{
+        "name": "Deposit",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response has accountId', function () { var json = pm.response.json(); pm.expect(json).to.have.property('accountId', 1001); });",
+              "pm.test('Transaction status is SUCCESS', function () { var json = pm.response.json(); pm.expect(json).to.have.property('transactionStatus', 'SUCCESS'); });",
+              "pm.test('Business validation - newBalance increased after deposit', function () { var json = pm.response.json(); pm.expect(json).to.have.property('newBalance', 7000); });"
+            ],
+            "type": "text/javascript"
+          }
+        }],
+        "request": {
+          "method": "POST",
+          "header": [{"key": "Content-Type", "value": "application/json"}],
+          "body": {"mode": "raw", "raw": "{\n  \"amount\": 2000\n}"},
+          "url": {"raw": "{{baseUrl}}/accounts/{{accountId}}/deposit", "host": ["{{baseUrl}}"], "path": ["accounts", "{{accountId}}", "deposit"]}
+        }
+      }]
+    },
+    {
+      "name": "Withdraw",
+      "item": [{
+        "name": "Withdraw",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response has accountId', function () { var json = pm.response.json(); pm.expect(json).to.have.property('accountId', 1001); });",
+              "pm.test('Transaction status is SUCCESS', function () { var json = pm.response.json(); pm.expect(json).to.have.property('transactionStatus', 'SUCCESS'); });",
+              "pm.test('Business validation - newBalance after withdraw', function () { var json = pm.response.json(); pm.expect(json).to.have.property('newBalance', 6000); });"
+            ],
+            "type": "text/javascript"
+          }
+        }],
+        "request": {
+          "method": "POST",
+          "header": [{"key": "Content-Type", "value": "application/json"}],
+          "body": {"mode": "raw", "raw": "{\n  \"amount\": 1000\n}"},
+          "url": {"raw": "{{baseUrl}}/accounts/{{accountId}}/withdraw", "host": ["{{baseUrl}}"], "path": ["accounts", "{{accountId}}", "withdraw"]}
+        }
+      }]
+    },
+    {
+      "name": "Close Account",
+      "item": [{
+        "name": "Close Account",
+        "event": [{
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response has success message', function () { var json = pm.response.json(); pm.expect(json).to.have.property('message', 'Account closed successfully'); });"
+            ],
+            "type": "text/javascript"
+          }
+        }],
+        "request": {
+          "method": "DELETE",
+          "header": [],
+          "url": {"raw": "{{baseUrl}}/accounts/{{accountId}}", "host": ["{{baseUrl}}"], "path": ["accounts", "{{accountId}}"]}
+        }
+      }]
+    }
+  ]
+}

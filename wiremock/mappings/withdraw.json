@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/accounts/1001/withdraw"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "withdraw-response.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

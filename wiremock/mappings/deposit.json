@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/accounts/1001/deposit"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "deposit-response.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

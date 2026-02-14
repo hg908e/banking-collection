@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/accounts"
+  },
+  "response": {
+    "status": 201,
+    "bodyFileName": "create-account-response.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "banking-api-automation",
+  "version": "1.0.0",
+  "scripts": {
+    "wiremock:start": "wiremock --port 8080 --root-dir wiremock --verbose",
+    "wiremock:start:bg": "start /B wiremock --port 8080 --root-dir wiremock --verbose",
+    "test": "newman run postman/Banking-API.postman_collection.json -e postman/local.postman_environment.json --reporters cli,htmlextra --reporter-htmlextra-export newman-report.html",
+    "test:ci": "newman run postman/Banking-API.postman_collection.json -e postman/local.postman_environment.json --reporters cli"
+  },
+  "devDependencies": {
+    "newman": "^6.0.0",
+    "newman-reporter-htmlextra": "^1.23.0"
+  }
+}
