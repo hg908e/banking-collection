@@ -10,4 +10,10 @@ public class HealthController {
     public String test() {
         return "Banking Automation Running";
     }
+
+
+    @GetMapping("/health-1")
+    public String test1() {
+        return "Banking Automation Running";
+    }
 }

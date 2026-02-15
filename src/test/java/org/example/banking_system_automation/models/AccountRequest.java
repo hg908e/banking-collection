@@ -24,5 +24,4 @@ public class AccountRequest {
     @JsonProperty("initialDeposit")
     public Double getInitialDeposit() {
         return initialDeposit;
-    }
-}
+    }}
