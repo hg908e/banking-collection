@@ -8,6 +8,11 @@ public class HealthController {
 
     @GetMapping("/health")
     public String test() {
-        return "Bankingjhfasgjk Automation Running";
+        return "Banking Automation Running";
+    }
+
+    @GetMapping("/health-1")
+    public String test1() {
+        return "Banking Automation Running";
     }
 }
